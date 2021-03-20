@@ -1,22 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+
+import { NewNoteInput } from "./components/NewNoteInput";
+import { useDispatch, useSelector } from "react-redux";
+
+import { addNote } from "./redux/actions";
 
 function App() {
+  const notes = useSelector((state) => state.notes);
+  const dispatch = useDispatch();
+
+  const onAddNote = (note) => {
+    dispatch(addNote(note));
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <p>Redux Saga app, tested with jest</p>
+        <NewNoteInput addNote={onAddNote} />
+        {notes.map((note) => (
+          <li key={note}>{note}</li>
+        ))}
       </header>
     </div>
   );
